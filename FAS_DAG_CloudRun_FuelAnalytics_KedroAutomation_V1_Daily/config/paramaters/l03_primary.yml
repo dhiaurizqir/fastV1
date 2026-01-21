@@ -1,0 +1,142 @@
+l03:
+  fas_daily:
+    pivot_payload:
+      rename_dict:
+        empty drv.time: empty_drive_time
+        empty stop time: empty_stop_time
+        loaded drv.time: loaded_drive_time
+        loaded stop time: loaded_stop_time
+        loadingstoptime: loading_stop_time
+        empty drv.dist.: empty_drive_distance
+        loaded drv.dist.: loaded_drive_distance
+        over load: over_load
+        over speed: over_speed
+        payload: payload
+        truck id: truck_id
+        angle ave: angle_ave
+        angle min: angle_min
+        angle max: angle_max
+        open id: open_id
+        limit speed: limit_speed
+
+      pivot_params:
+        index:
+          - dumptruck_serial_number
+          - dumptruck_model
+          - customer_name
+          - cycle_start_time
+        columns:
+          - parameter_name
+        values:
+          - parameter_values
+
+      fillna_dict:
+        empty_drive_time: 0
+        empty_stop_time: 0
+        loaded_drive_time: 0
+        loaded_stop_time: 0
+        loading_stop_time: 0
+        empty_drive_distance: 0
+        loaded_drive_distance: 0
+        payload: 0
+
+    create_populasi_pipeline:
+      excavator:
+        rename_columns:
+          unit_code: excavator_code
+          unit_model: excavator_model
+          unit_serial_number: excavator_serial_number
+        keep_with_cols:
+          use_cols:
+            - excavator_code
+            - excavator_model
+            - excavator_serial_number
+            - customer_name
+
+      dumptruck:
+        rename_columns:
+          unit_code: dumptruck_code
+          unit_model: dumptruck_model
+          unit_serial_number: dumptruck_serial_number
+        keep_with_cols:
+          use_cols:
+            - dumptruck_code
+            - dumptruck_model
+            - dumptruck_serial_number
+            - customer_name
+            - customer_code
+
+    create_refuel_pipeline:
+      refuel_timestamps_transform:
+        merge_dataframes_node_prm_populasi_dumptruck:
+          on:
+            - dumptruck_code
+            - customer_name
+          how: left
+        use_cols:
+          - dumptruck_code
+          - customer_name
+          - refuel_round_end_time
+          - refuel_qty
+      keep_with_cols:
+        use_cols:
+          - customer_code
+          - dumptruck_serial_number
+          - dumptruck_code
+          - dumptruck_model
+          - refuel_round_start_time
+          - refuel_round_end_time
+          - refuel_qty
+
+    create_fleet_pipeline:
+      merge_dataframes_node_prm_populasi_dumptruck:
+        on:
+          - dumptruck_code
+          - dumptruck_model
+          - customer_name
+        how: left
+      merge_dataframes_node_prm_populasi_excavator:
+        on:
+          - excavator_code
+          - customer_name
+        how: left
+      keep_with_cols:
+        use_cols:
+          - customer_code
+          - dumptruck_code
+          - dumptruck_model
+          - dumptruck_serial_number
+          - excavator_code
+          - excavator_model
+          - excavator_serial_number
+          - shift_start_time
+          - shift_end_time
+          - shift
+
+    create_payloads_pipeline:
+      merge_dataframes_node_prm_populasi_dumptruck:
+        on:
+          - dumptruck_serial_number
+          - dumptruck_model
+          - customer_name
+        how: inner
+      keep_with_cols:
+        use_cols:
+          - customer_code
+          - dumptruck_serial_number
+          - dumptruck_code
+          - dumptruck_model
+          - cycle_start_time
+          - cycle_end_time
+          - cycle_id
+          - shift_start_time
+          - shift_end_time
+          - empty_drive_distance
+          - empty_drive_time
+          - empty_stop_time
+          - loaded_drive_distance
+          - loaded_drive_time
+          - loaded_stop_time
+          - loading_stop_time
+          - payload
+  

@@ -1,0 +1,86 @@
+base_path: ut_exp_landing/Project/Service/FAS/FuelAnalytics/main
+
+l01:
+  fas_daily:
+    raw_customer_shift:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/01_raw/master_data/CustomerShiftHour.csv"
+
+    raw_fleet:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/01_raw/intervention/Fleet/Fleet-Intervention.csv"
+
+    raw_populasi:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/01_raw/master_data/populasi/UnitPopulasi.csv"
+
+    raw_refuel:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/01_raw/intervention/Refuel/Refuel-Intervention.csv"
+
+    raw_vhms_payloads:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/01_raw/intervention/VHMS/Payloads-Intervention.csv"
+
+l02:
+  fas_daily:
+    int_fleet:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/02_intermediate/FAS_daily_v1/int_fleet.pq"
+
+    int_populasi:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/02_intermediate/FAS_daily_v1/int_populasi.pq"
+
+    int_refuel:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/02_intermediate/FAS_daily_v1/int_refuel.pq"
+
+    int_vhms_payloads:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/02_intermediate/FAS_daily_v1/int_vhms_payloads.pq"
+
+l03:
+  fas_daily:
+    prm_populasi_dumptruck:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/prm_populasi_dumptruck.pq"
+
+    prm_populasi_excavator:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/prm_populasi_excavator.pq"
+
+    prm_populasi_fleet:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/prm_populasi_fleet.pq"
+
+    prm_refuel:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/prm_refuel.pq"
+
+    prm_fleet:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/prm_fleet.pq"
+
+    pivoted_payloads:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/pivoted_payloads.pq"
+
+    prm_vhms_payloads:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/03_primary/FAS_daily_v1/prm_vhms_payloads.pq"
+
+l04:
+  fas_daily:
+    feat_merge_refuel_payload:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/04_feature/FAS_daily_v1/feat_merge_refuel_payload.pq"
+
+    feat_fleet_cycle:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/04_feature/FAS_daily_v1/feat_fleet_cycle.pq"
+
+    feat_payload_shift:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/04_feature/FAS_daily_v1/feat_payload_shift.pq"
+
+    feat_rr_metrics:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/04_feature/FAS_daily_v1/feat_rr_metrics.pq"
+
+    feat_shift_metrics_ref:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/04_feature/FAS_daily_v1/feat_shift_metrics_ref.pq"
+
+    feat_shift_metrics:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/04_feature/FAS_daily_v1/feat_shift_metrics.pq"
+
+l08:
+  fas_daily:
+    rpt_fuel_ratio_intv:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/08_reporting/FAS_daily_v1/rpt_fuel_ratio_intv.pq"
+
+    rpt_refuel_qty_intv:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/08_reporting/FAS_daily_v1/rpt_refuel_qty_intv.pq"
+
+    rpt_payload_intv:
+      path: "ut_exp_landing/Project/Service/FAS/FuelAnalytics/main/08_reporting/FAS_daily_v1/rpt_payload_intv.pq"

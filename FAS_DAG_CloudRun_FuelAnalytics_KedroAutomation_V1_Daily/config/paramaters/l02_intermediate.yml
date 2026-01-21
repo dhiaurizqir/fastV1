@@ -1,0 +1,115 @@
+l02:
+  fas_daily:
+    typecasting_params:
+      raw_fleet:
+        col_names:
+          Date: date
+          Shift: shift
+          ExcavatorCode: excavator_code
+          DumptruckCode: dumptruck_code
+          DumptruckModel: dumptruck_model
+          SourceCustomer: customer
+        dtype:
+          dumptruck_code: string
+          dumptruck_model: string
+          date: datetime64[ns]
+          shift: string
+          excavator_code: string
+          customer: string
+        primary_keys: null
+        usecols:
+          - dumptruck_code
+          - dumptruck_model
+          - date
+          - shift
+          - excavator_code
+          - customer
+        partition_key: null
+        order_by: null
+        dt_format:
+          date: "%Y-%m-%d"
+
+      raw_populasi:
+        dtype:
+          unit_code: string
+          unit_model: string
+          unit_serial_number: string
+          customer_name: string
+          customer_code: string
+        col_names:
+          UnitCode: unit_code
+          UnitModel: unit_model
+          SerialNumber: unit_serial_number
+          CustomerName: customer_name
+          CustomerCode: customer_code
+        primary_keys: null
+        order_by: null
+        partition_key: null
+        usecols:
+          - unit_code
+          - unit_model
+          - unit_serial_number
+          - customer_name
+          - customer_code
+        dt_format: null
+
+      raw_refuel:
+        col_names:
+          DumptruckCode: dumptruck_code
+          RefuelShift: refuel_shift
+          RefuelTime: refuel_time_offset
+          RefuelQuantity: refuel_qty
+          RefuelDate: refuel_date
+          SourceCustomer: customer
+        dtype:
+          dumptruck_code: string
+          refuel_date: datetime64[ns]
+          refuel_time_offset: string
+          refuel_qty: float64
+          refuel_shift: string
+          customer: string
+        primary_keys:
+          - dumptruck_code
+          - refuel_time_offset
+          - refuel_date
+        order_by: null
+        usecols:
+          - dumptruck_code
+          - refuel_date
+          - refuel_time_offset
+          - refuel_shift
+          - refuel_qty
+          - customer
+        partition_key: null
+        dt_format: null  # let node infer
+
+      raw_vhms_payloads:
+        dtype:
+          # customer_code: string
+          customer_name: string
+          dumptruck_serial_number: string
+          dumptruck_model: string
+          cycle_start_time: datetime64[ns]
+          parameter_name: string
+          parameter_values: float64
+        col_names:
+          # CustomerCode: customer_code
+          CustomerName: customer_name
+          SerialNumber: dumptruck_serial_number
+          UnitModel: dumptruck_model
+          ValueDate: cycle_start_time
+          ParameterName: parameter_name
+          ParameterValues: parameter_values
+        primary_keys: null
+        order_by: null
+        partition_key: null
+        usecols:
+          # - customer_code
+          - customer_name
+          - dumptruck_serial_number
+          - dumptruck_model
+          - cycle_start_time
+          - parameter_name
+          - parameter_values
+        dt_format:
+          cycle_start_time: "%Y-%m-%d %H:%M:%S"

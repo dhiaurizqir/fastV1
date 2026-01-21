@@ -1,0 +1,169 @@
+fas_daily.create_merged_refuel_payload_pipeline:
+  merge:
+    join_keys:
+      - customer_code
+      - dumptruck_serial_number
+      - dumptruck_code
+      - dumptruck_model
+    how: left
+
+fas_daily.create_fleet_cycles_pipeline:
+  merge_fleet:
+    on:
+      - customer_code
+      - dumptruck_serial_number
+      - dumptruck_code
+      - dumptruck_model
+      - shift_start_time
+      - shift_end_time
+    how: left
+
+  create_feature_fuel:
+    main_cols:
+      - customer_code
+      - dumptruck_serial_number
+      - dumptruck_code
+      - dumptruck_model
+    refuel_cols:
+      - refuel_round_start_time
+      - refuel_round_end_time
+
+fas_daily.create_metrics_calc_pipeline:
+  metrics_rr:
+    groupby_keys:
+      - customer_code
+      - dumptruck_serial_number
+      - dumptruck_model
+      - dumptruck_code
+      - excavator_serial_number
+      - excavator_model
+      - excavator_code
+      - refuel_round_start_time
+      - refuel_round_end_time
+      - refuel_qty
+
+  metrics_shift:
+    groupby_keys:
+      - customer_code
+      - dumptruck_serial_number
+      - dumptruck_model
+      - dumptruck_code
+      - excavator_serial_number
+      - excavator_model
+      - excavator_code
+      - shift_start_time
+      - shift_end_time
+      - shift
+
+fas_daily.create_outlier_standar_pipeline:
+  remove_outlier:
+    fuel_ratio: refuel_qty
+    refuel_qty: refuel_qty
+    payload: payload_sum
+
+  standarization_columns:
+
+    fuel_ratio:
+      col_names:
+        customer_code: CustomerCode
+        dumptruck_serial_number: DumptruckSerialNumber
+        dumptruck_model: DumptruckModel
+        dumptruck_code: DumptruckCode
+        excavator_serial_number: ExcavatorSerialNumber
+        excavator_model: ExcavatorModel
+        excavator_code: ExcavatorCode
+        refuel_round_start_time: RefuelRoundStartTime
+        refuel_round_end_time: RefuelRoundEndTime
+        num_cycles: NumCycles
+        payload_sum: PayloadSum
+        refuel_qty_sum: RefuelingQuantitySum
+        distance_sum: DistanceSum
+      keep_with_cols:
+        - CustomerCode
+        - DumptruckSerialNumber
+        - DumptruckModel
+        - DumptruckCode
+        - ExcavatorSerialNumber
+        - ExcavatorModel
+        - ExcavatorCode
+        - RefuelRoundStartTime
+        - RefuelRoundEndTime
+        - NumCycles
+        - PayloadSum
+        - RefuelingQuantitySum
+        - DistanceSum
+      uppercase_cols:
+        - DumptruckSerialNumber
+        - DumptruckModel
+        - DumptruckCode
+        - ExcavatorSerialNumber
+        - ExcavatorModel
+        - ExcavatorCode
+
+    payload:
+      col_names:
+        customer_code: CustomerCode
+        shift_start_time: ShiftStartTime
+        shift_end_time: ShiftEndTime
+        excavator_serial_number: ExcavatorSerialNumber
+        excavator_model: ExcavatorModel
+        excavator_code: ExcavatorCode
+        dumptruck_serial_number: DumptruckSerialNumber
+        dumptruck_model: DumptruckModel
+        dumptruck_code: DumptruckCode
+        shift: Shift
+        num_cycles: NumCycles
+        payload_sum: PayloadSum
+      keep_with_cols:
+        - CustomerCode
+        - ShiftStartTime
+        - ShiftEndTime
+        - ExcavatorSerialNumber
+        - ExcavatorModel
+        - ExcavatorCode
+        - DumptruckSerialNumber
+        - DumptruckModel
+        - DumptruckCode
+        - Shift
+        - NumCycles
+        - PayloadSum
+      uppercase_cols:
+        - ExcavatorSerialNumber
+        - ExcavatorModel
+        - ExcavatorCode
+        - DumptruckSerialNumber
+        - DumptruckModel
+        - DumptruckCode
+
+    refuel_qty:
+      col_names:
+        customer_code: CustomerCode
+        dumptruck_serial_number: DumptruckSerialNumber
+        dumptruck_model: DumptruckModel
+        dumptruck_code: DumptruckCode
+        excavator_serial_number: ExcavatorSerialNumber
+        excavator_model: ExcavatorModel
+        excavator_code: ExcavatorCode
+        refuel_round_start_time: RefuelRoundStartTime
+        refuel_round_end_time: RefuelRoundEndTime
+        num_cycles: NumCycles
+        refuel_qty: RefuelingQuantitySum
+      keep_with_cols:
+        - CustomerCode
+        - DumptruckSerialNumber
+        - DumptruckModel
+        - DumptruckCode
+        - ExcavatorSerialNumber
+        - ExcavatorModel
+        - ExcavatorCode
+        - RefuelRoundStartTime
+        - RefuelRoundEndTime
+        - NumCycles
+        - RefuelingQuantitySum
+      uppercase_cols:
+        - DumptruckSerialNumber
+        - DumptruckModel
+        - DumptruckCode
+        - ExcavatorSerialNumber
+        - ExcavatorModel
+        - ExcavatorCode
